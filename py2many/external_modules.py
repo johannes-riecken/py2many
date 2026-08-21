@@ -1,8 +1,11 @@
 from dataclasses import dataclass
+import logging
 import os
 import imp
 from pydoc import ispath
 from types import ModuleType
+
+logger = logging.getLogger(__name__)
 
 MOD_DIR = f"external{os.sep}modules"
 
@@ -45,7 +48,11 @@ class ExternalBase:
             for mod_path in external_mods:
                 split_name: tuple[str, str] = os.path.split(mod_path)
                 mod_name = split_name[1]
-                ext_mod: ModuleType = imp.load_source(mod_name, mod_path)
+                try:
+                    ext_mod: ModuleType = imp.load_source(mod_name, mod_path)
+                except Exception as e:
+                    logger.debug(f"Failed to load external module {mod_path}: {e}")
+                    continue
                 for attr_name, map_name in MOD_NAMES:
                     if attr_name in self.__dict__ and map_name in ext_mod.__dict__:
                         obj = ext_mod.__dict__[map_name]

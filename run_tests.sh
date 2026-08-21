@@ -4,10 +4,9 @@ TESTS="tests"
 # cd "$PY2MANY_HOME"
 
 # Run Translation tests
-sudo ./setup.py install
-
 ## Base tests
-py2many --julia=1 "$TESTS/cases" --outdir=../pyjl_tests/cases-py2many
+. ./venv/bin/activate
+python3 ./venv/bin/py2many --julia=1 "$TESTS/cases" --outdir=../pyjl_tests/cases-py2many
 # python py2many.py --julia=1 tests/cases --outdir=../pyjl_tests/cases-py2many # Temporary for windows
 # Example with config
 # py2many --julia=1 --config=pyjl/test_files/setup.ini "$TESTS/cases/sealed.py" --outdir=../pyjl_tests/cases-py2many
@@ -17,7 +16,7 @@ py2many --julia=1 "$TESTS/cases" --outdir=../pyjl_tests/cases-py2many
 # python py2many.py --julia=1 "$TESTS/cases_py" --outdir=../pyjl_tests/cases_py-py2many # Temporary for windows
 
 ## Performance tests
-py2many --julia=1 "$TESTS/performance_tests" --outdir=../pyjl_tests/performance_tests-py2many
+python3 ./venv/bin/py2many --julia=1 "$TESTS/performance_tests" --outdir=../pyjl_tests/performance_tests-py2many
 #  TODO: Review this
 # python py2many.py --julia=1 tests/performance_tests --outdir=../pyjl_tests/performance_tests-py2many # Temporary for windows
 

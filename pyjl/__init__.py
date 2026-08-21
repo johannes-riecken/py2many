@@ -1,3 +1,4 @@
+import builtins
 import os
 
 from distutils import spawn
@@ -38,7 +39,7 @@ from .optimizations import (
     PerformanceOptimizations,
 )
 
-from .transpiler import JuliaMethodCallRewriter, JuliaTranspiler
+from .transpiler import JuliaTranspiler
 from .transformers import find_ordered_collections, parse_decorators
 from .analysis import (
     analyse_variable_scope,

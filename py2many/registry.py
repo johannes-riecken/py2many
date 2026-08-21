@@ -5,7 +5,7 @@ from unittest.mock import Mock
 
 from .language import LanguageSettings
 
-from .python_transformer import PythonTranspiler, RestoreMainRewriter
+from py2py.transpiler import PythonTranspiler, RestoreMainRewriter
 
 from .rewriters import InferredAnnAssignRewriter
 

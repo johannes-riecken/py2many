@@ -242,7 +242,7 @@ EXTERNAL_TYPE_MAP = {
     np.float16: lambda self: "Float16",
     np.float32: lambda self: "Float32",
     np.float64: lambda self: "Float64",
-    np.bool8: lambda self: "Bool",
+    np.bool_: lambda self: "Bool",
     np.byte: lambda self: "UInt8",
     np.short: lambda self: "Int8",
     np.ndarray: lambda self: "Matrix",

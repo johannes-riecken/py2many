@@ -137,6 +137,12 @@ class JuliaMethodCallRewriter(ast.NodeTransformer):
                     id=new_func_name, lineno=node.lineno, ctx=fname.ctx
                 )
             elif not is_class_or_module(val_id, node.scopes):
+                # If val_id is an imported module alias (e.g. np from 'import numpy as np'), 
+                # don't rewrite - the dispatch system handles qualified calls
+                module_scope = node.scopes[0]
+                imported_names = getattr(module_scope, "imported_names", {})
+                if val_id in imported_names:
+                    return node
                 args = [fname.value] + args
                 new_func_name = fname.attr
                 node.func = ast.Name(
