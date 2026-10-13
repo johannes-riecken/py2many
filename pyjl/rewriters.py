@@ -763,6 +763,19 @@ class JuliaIndexingRewriter(ast.NodeTransformer):
                 ):
                     # Shortcut if index is a numeric value
                     node.slice.value += 1
+                elif isinstance(node.slice, ast.Tuple):
+                    # Multi-dimensional indexing: e.g. vol[0, 1] -> vol[1, 2]
+                    node.slice.in_subscript = True
+                    for i, elt in enumerate(node.slice.elts):
+                        if isinstance(elt, ast.Constant) and isinstance(elt.value, int):
+                            elt.value += 1
+                        elif isinstance(elt, ast.Constant) and isinstance(elt.value, str):
+                            continue
+                        elif get_id(elt) != "end":
+                            new_elt = self._do_bin_op(
+                                elt, ast.Add(), 1, node.lineno, node.col_offset
+                            )
+                            node.slice.elts[i] = new_elt
                 else:
                     # Don't add 1 to string constants
                     if isinstance(node.slice, ast.Constant) and isinstance(

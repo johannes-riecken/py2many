@@ -184,7 +184,7 @@ class JuliaExternalModulePlugins:
         t_self, node: ast.Call, vargs: list[str], kwargs: list[tuple[str, str]]
     ):
         if len(vargs) == 2:
-            return f"reshape({vargs[0]}, {vargs[1]})"
+            return f"permutedims(reshape({vargs[0]}, {vargs[1]}))"
         return "reshape"
 
 

@@ -1021,6 +1021,8 @@ class JuliaTranspiler(CLikeTranspiler):
         elts = self._parse_elts(node)
         if hasattr(node, "is_annotation"):
             return elts
+        if getattr(node, "in_subscript", False):
+            return elts
         if len(node.elts) == 1:
             return f"({elts},)"
         return f"({elts})"
